@@ -1,0 +1,49 @@
+{
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext", // https://www.typescriptlang.org/tsconfig/#module
+    "skipLibCheck": true, // https://www.typescriptlang.org/tsconfig/#skipLibCheck
+    /* Bundler mode */
+    "moduleResolution": "Bundler", // https://www.typescriptlang.org/tsconfig/#moduleResolution
+    "allowImportingTsExtensions": true, // https://www.typescriptlang.org/tsconfig/#allowImportingTsExtensions
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+    "jsx": "react-jsx",
+    /* Linting */
+    "strict": true, // https://www.typescriptlang.org/tsconfig/#strict
+    "noUnusedLocals": true, // https://www.typescriptlang.org/tsconfig/#noUnusedLocals
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true, // https://www.typescriptlang.org/tsconfig/#noFallthroughCasesInSwitch
+    "noUncheckedSideEffectImports": true, // https://www.typescriptlang.org/tsconfig/#noUncheckedSideEffectImports
+
+    /* Type Checking */
+    "allowUnreachableCode": false, // https://www.typescriptlang.org/tsconfig/#allowUnreachableCode
+    "allowUnusedLabels": false, // https://www.typescriptlang.org/tsconfig/#allowUnusedLabels
+    "exactOptionalPropertyTypes": false, // https://www.typescriptlang.org/tsconfig/#exactOptionalPropertyTypes
+    "noImplicitReturns": true, // https://www.typescriptlang.org/tsconfig/#noImplicitReturns
+    "strictBindCallApply": true, // https://www.typescriptlang.org/tsconfig/#strictBindCallApply
+    "strictFunctionTypes": true, // https://www.typescriptlang.org/tsconfig/#strictFunctionTypes
+    "strictNullChecks": true, // https://www.typescriptlang.org/tsconfig/#strictNullChecks
+    "strictPropertyInitialization": true, // https://www.typescriptlang.org/tsconfig/#strictPropertyInitialization,
+    "useUnknownInCatchVariables": true, // https://www.typescriptlang.org/tsconfig/#useUnknownInCatchVariables
+    "incremental": true, // https://www.typescriptlang.org/tsconfig/#incremental
+
+    /* Interop Constraints */
+    "esModuleInterop": true, // https://www.typescriptlang.org/tsconfig/#esModuleInterop
+
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  },
+  "include": ["src"],
+  "exclude": ["node_modules"],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ]
+}
