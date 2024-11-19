@@ -74,6 +74,6 @@ const generateData = (numRecords) => {
   return Array.from({ length: numRecords }, generateUserData);
 };
 
-const data = generateData(10000);
+const data = generateData(2000);
 
 createJsonFile(data, "users");
