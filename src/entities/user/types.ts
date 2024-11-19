@@ -32,7 +32,7 @@ export interface UserData {
   _id: string;
   name: string;
   avatar: string;
-  birthday: Date;
+  birthday: string;
   email: string;
   status: "inactive" | "banned" | "active";
   role: string;

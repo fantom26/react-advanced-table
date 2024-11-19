@@ -15,6 +15,7 @@ import Sex from "@/pages/home/sex.tsx";
 import Status from "@/pages/home/status.tsx";
 import Table from "@/shared/components/table";
 import getJsonData from "@/shared/helpers/get-json-data.ts";
+import { DateManager } from "@/shared/managers";
 
 const columns: ColumnDef<UserData>[] = [
   {
@@ -39,19 +40,19 @@ const columns: ColumnDef<UserData>[] = [
     header: "Birthday",
     accessorKey: "birthday",
     enableSorting: true,
-    cell: ({ row }) => row.original.birthday.toString()
+    cell: ({ row }) => DateManager.format(row.original.birthday)
   },
   {
     header: "Last login",
     accessorKey: "lastLogin",
     enableSorting: true,
-    cell: ({ row }) => row.original.lastLogin.toString()
+    cell: ({ row }) => DateManager.format(row.original.lastLogin)
   },
   {
     header: "Registration date",
     accessorKey: "registrationDate",
     enableSorting: true,
-    cell: ({ row }) => row.original.registrationDate.toString()
+    cell: ({ row }) => DateManager.format(row.original.registrationDate)
   },
   {
     header: "Sex",
