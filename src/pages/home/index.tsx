@@ -18,6 +18,7 @@ function Home() {
             <Table.ColumnHeader>Birthday</Table.ColumnHeader>
             <Table.ColumnHeader>Sex</Table.ColumnHeader>
             <Table.ColumnHeader>Status</Table.ColumnHeader>
+            <Table.ColumnHeader>Role</Table.ColumnHeader>
           </Table.Row>
         </Table.Header>
         <Table.Body>
@@ -31,6 +32,7 @@ function Home() {
               <Table.Cell>
                 <Status status={item.status} />
               </Table.Cell>
+              <Table.Cell>{item.role}</Table.Cell>
             </Table.Row>
           ))}
         </Table.Body>
