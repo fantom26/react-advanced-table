@@ -34,7 +34,7 @@ export interface UserData {
   avatar: string;
   birthday: Date;
   email: string;
-  status: string;
+  status: "inactive" | "banned" | "active";
   role: string;
   registrationDate: string;
   lastLogin: string;

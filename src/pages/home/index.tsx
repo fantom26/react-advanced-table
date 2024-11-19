@@ -1,6 +1,7 @@
 import { Container, Table } from "@chakra-ui/react";
 
 import { UserData } from "@/entities/user/types.ts";
+import Status from "@/pages/home/status.tsx";
 import getJsonData from "@/shared/helpers/get-json-data.ts";
 
 const data: UserData[] = await getJsonData("db/users.json");
@@ -16,6 +17,7 @@ function Home() {
             <Table.ColumnHeader>Email</Table.ColumnHeader>
             <Table.ColumnHeader>Birthday</Table.ColumnHeader>
             <Table.ColumnHeader>Sex</Table.ColumnHeader>
+            <Table.ColumnHeader>Status</Table.ColumnHeader>
           </Table.Row>
         </Table.Header>
         <Table.Body>
@@ -26,6 +28,9 @@ function Home() {
               <Table.Cell>{item.email}</Table.Cell>
               <Table.Cell>{item.birthday.toString()}</Table.Cell>
               <Table.Cell>{item.sex}</Table.Cell>
+              <Table.Cell>
+                <Status status={item.status} />
+              </Table.Cell>
             </Table.Row>
           ))}
         </Table.Body>
