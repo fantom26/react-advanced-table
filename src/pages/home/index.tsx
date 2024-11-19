@@ -24,12 +24,6 @@ const columns: ColumnDef<UserData>[] = [
     cell: ({ row }) => row.index + 1
   },
   {
-    header: "Id",
-    accessorKey: "_id",
-    enableSorting: true,
-    cell: ({ row }) => row.original._id
-  },
-  {
     header: "Name",
     accessorKey: "name",
     enableSorting: true,
@@ -46,6 +40,18 @@ const columns: ColumnDef<UserData>[] = [
     accessorKey: "birthday",
     enableSorting: true,
     cell: ({ row }) => row.original.birthday.toString()
+  },
+  {
+    header: "Last login",
+    accessorKey: "lastLogin",
+    enableSorting: true,
+    cell: ({ row }) => row.original.lastLogin.toString()
+  },
+  {
+    header: "Registration date",
+    accessorKey: "registrationDate",
+    enableSorting: true,
+    cell: ({ row }) => row.original.registrationDate.toString()
   },
   {
     header: "Sex",
@@ -68,7 +74,7 @@ const columns: ColumnDef<UserData>[] = [
 ];
 
 const tableConfig: TableRootProps = {
-  size: "sm",
+  size: "md",
   striped: true,
   showColumnBorder: true,
   variant: "outline"
