@@ -1,42 +1,62 @@
-import { Container, Table } from "@chakra-ui/react";
+import { Container } from "@chakra-ui/react";
+import { ColumnDef } from "@tanstack/react-table";
 
 import { UserData } from "@/entities/user/types.ts";
 import Status from "@/pages/home/status.tsx";
+import Table from "@/shared/components/table";
 import getJsonData from "@/shared/helpers/get-json-data.ts";
 
 const data: UserData[] = await getJsonData("db/users.json");
 
+const columns: ColumnDef<UserData>[] = [
+  {
+    header: "Id",
+    accessorKey: "_id",
+    enableSorting: true,
+    cell: ({ row }) => row.original._id
+  },
+  {
+    header: "Name",
+    accessorKey: "name",
+    enableSorting: true,
+    cell: ({ row }) => row.original.name
+  },
+  {
+    header: "Email",
+    accessorKey: "email",
+    enableSorting: true,
+    cell: ({ row }) => row.original.email
+  },
+  {
+    header: "Birthday",
+    accessorKey: "birthday",
+    enableSorting: true,
+    cell: ({ row }) => row.original.birthday.toString()
+  },
+  {
+    header: "Sex",
+    accessorKey: "sex",
+    enableSorting: true,
+    cell: ({ row }) => row.original.sex
+  },
+  {
+    header: "Status",
+    accessorKey: "status",
+    enableSorting: true,
+    cell: ({ row }) => <Status status={row.original.status} />
+  },
+  {
+    header: "Role",
+    accessorKey: "role",
+    enableSorting: false,
+    cell: ({ row }) => row.original.role
+  }
+];
+
 function Home() {
   return (
     <Container>
-      <Table.Root size="sm">
-        <Table.Header>
-          <Table.Row>
-            <Table.ColumnHeader>Id</Table.ColumnHeader>
-            <Table.ColumnHeader>Name</Table.ColumnHeader>
-            <Table.ColumnHeader>Email</Table.ColumnHeader>
-            <Table.ColumnHeader>Birthday</Table.ColumnHeader>
-            <Table.ColumnHeader>Sex</Table.ColumnHeader>
-            <Table.ColumnHeader>Status</Table.ColumnHeader>
-            <Table.ColumnHeader>Role</Table.ColumnHeader>
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>
-          {data.map((item) => (
-            <Table.Row key={item._id}>
-              <Table.Cell>{item._id}</Table.Cell>
-              <Table.Cell>{item.name}</Table.Cell>
-              <Table.Cell>{item.email}</Table.Cell>
-              <Table.Cell>{item.birthday.toString()}</Table.Cell>
-              <Table.Cell>{item.sex}</Table.Cell>
-              <Table.Cell>
-                <Status status={item.status} />
-              </Table.Cell>
-              <Table.Cell>{item.role}</Table.Cell>
-            </Table.Row>
-          ))}
-        </Table.Body>
-      </Table.Root>
+      <Table data={data} columns={columns} />
     </Container>
   );
 }
