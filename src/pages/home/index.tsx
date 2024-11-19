@@ -1,12 +1,19 @@
-import { Container, TableRootProps } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+
+import {
+  AbsoluteCenter,
+  Container,
+  Spinner,
+  TableRootProps,
+  Text,
+  VStack
+} from "@chakra-ui/react";
 import { ColumnDef } from "@tanstack/react-table";
 
 import { UserData } from "@/entities/user/types.ts";
 import Status from "@/pages/home/status.tsx";
 import Table from "@/shared/components/table";
 import getJsonData from "@/shared/helpers/get-json-data.ts";
-
-const data: UserData[] = await getJsonData("db/users-300.json");
 
 const columns: ColumnDef<UserData>[] = [
   {
@@ -67,9 +74,32 @@ const tableConfig: TableRootProps = {
 };
 
 function Home() {
+  const [data, setData] = useState<UserData[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await getJsonData("db/users-300.json");
+
+      setData(response);
+      setLoading(false);
+    };
+
+    fetchData();
+  }, []);
+
   return (
-    <Container>
-      <Table data={data} columns={columns} tableConfig={tableConfig} />
+    <Container minHeight="100vh">
+      {loading ? (
+        <AbsoluteCenter>
+          <VStack colorPalette="teal">
+            <Spinner color="colorPalette.600" size="xl" />
+            <Text color="colorPalette.600">Loading...</Text>
+          </VStack>
+        </AbsoluteCenter>
+      ) : (
+        <Table data={data} columns={columns} tableConfig={tableConfig} />
+      )}
     </Container>
   );
 }
