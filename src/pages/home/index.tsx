@@ -1,4 +1,4 @@
-import { Container } from "@chakra-ui/react";
+import { Container, TableRootProps } from "@chakra-ui/react";
 import { ColumnDef } from "@tanstack/react-table";
 
 import { UserData } from "@/entities/user/types.ts";
@@ -6,9 +6,15 @@ import Status from "@/pages/home/status.tsx";
 import Table from "@/shared/components/table";
 import getJsonData from "@/shared/helpers/get-json-data.ts";
 
-const data: UserData[] = await getJsonData("db/users.json");
+const data: UserData[] = await getJsonData("db/users-300.json");
 
 const columns: ColumnDef<UserData>[] = [
+  {
+    header: "№",
+    accessorKey: "index",
+    enableSorting: true,
+    cell: ({ row }) => row.index + 1
+  },
   {
     header: "Id",
     accessorKey: "_id",
@@ -48,15 +54,22 @@ const columns: ColumnDef<UserData>[] = [
   {
     header: "Role",
     accessorKey: "role",
-    enableSorting: false,
+    enableSorting: true,
     cell: ({ row }) => row.original.role
   }
 ];
 
+const tableConfig: TableRootProps = {
+  size: "sm",
+  striped: true,
+  showColumnBorder: true,
+  variant: "outline"
+};
+
 function Home() {
   return (
     <Container>
-      <Table data={data} columns={columns} />
+      <Table data={data} columns={columns} tableConfig={tableConfig} />
     </Container>
   );
 }

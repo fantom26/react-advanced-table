@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { Table } from "@chakra-ui/react";
+import { Table, TableRootProps } from "@chakra-ui/react";
 import {
   ColumnDef,
   SortingState,
@@ -13,11 +13,11 @@ import {
 export type DataTableProps<Data extends object> = {
   data: Data[];
   columns: ColumnDef<Data>[];
-  size?: "sm" | "md" | "lg";
+  tableConfig?: TableRootProps;
 };
 
 function DataTable<Data extends object>({
-  size = "sm",
+  tableConfig,
   data,
   columns
 }: DataTableProps<Data>) {
@@ -34,7 +34,7 @@ function DataTable<Data extends object>({
   });
 
   return (
-    <Table.Root size={size}>
+    <Table.Root {...tableConfig}>
       <Table.Header>
         {table.getHeaderGroups().map((headerGroup) => (
           <Table.Row key={headerGroup.id}>
