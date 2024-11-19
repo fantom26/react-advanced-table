@@ -11,6 +11,7 @@ import {
 import { ColumnDef } from "@tanstack/react-table";
 
 import { UserData } from "@/entities/user/types.ts";
+import Sex from "@/pages/home/sex.tsx";
 import Status from "@/pages/home/status.tsx";
 import Table from "@/shared/components/table";
 import getJsonData from "@/shared/helpers/get-json-data.ts";
@@ -50,7 +51,7 @@ const columns: ColumnDef<UserData>[] = [
     header: "Sex",
     accessorKey: "sex",
     enableSorting: true,
-    cell: ({ row }) => row.original.sex
+    cell: ({ row }) => <Sex value={row.original.sex} />
   },
   {
     header: "Status",
