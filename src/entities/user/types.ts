@@ -27,6 +27,7 @@ interface Meta {
 }
 
 type SubscriptionTier = "free" | "basic" | "platinum" | "gold" | "silver";
+type RoleType = "editor" | "admin" | "moderator" | "contributor" | "user";
 
 export interface UserData {
   _id: string;
@@ -35,7 +36,7 @@ export interface UserData {
   birthday: string;
   email: string;
   status: "inactive" | "banned" | "active";
-  role: string;
+  role: RoleType;
   registrationDate: string;
   lastLogin: string;
   actions: {

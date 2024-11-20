@@ -13,6 +13,7 @@ import {
 import { ColumnDef } from "@tanstack/react-table";
 
 import { UserData } from "@/entities/user/types.ts";
+import Role from "@/pages/home/role.tsx";
 import Sex from "@/pages/home/sex.tsx";
 import Status from "@/pages/home/status.tsx";
 import Table from "@/shared/components/table";
@@ -99,7 +100,7 @@ const columns: ColumnDef<UserData>[] = [
     header: "Role",
     accessorKey: "role",
     enableSorting: true,
-    cell: ({ row }) => row.original.role
+    cell: ({ row }) => <Role value={row.original.role} />
   }
 ];
 
