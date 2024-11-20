@@ -1,15 +1,16 @@
-import { Badge } from "@chakra-ui/react";
+import { Badge, ThemeProps } from "@chakra-ui/react";
 
 import { UserData } from "@/entities/user/types.ts";
 
-const STATUSES_COLORS = {
-  inactive: "green",
-  active: "purple",
-  banned: "red"
-};
+const STATUSES_COLORS: Record<UserData["status"], ThemeProps["colorPalette"]> =
+  {
+    inactive: "green",
+    active: "purple",
+    banned: "red"
+  };
 
-function Status({ status }: { status: UserData["status"] }) {
-  return <Badge colorPalette={STATUSES_COLORS[status]}>{status}</Badge>;
+function Status({ value }: { value: UserData["status"] }) {
+  return <Badge colorPalette={STATUSES_COLORS[value]}>{value}</Badge>;
 }
 
 export default Status;

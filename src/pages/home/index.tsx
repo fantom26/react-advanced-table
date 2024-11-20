@@ -21,6 +21,8 @@ import Table from "@/shared/components/table";
 import getJsonData from "@/shared/helpers/get-json-data.ts";
 import { DateManager } from "@/shared/managers";
 
+import Subscription from "./subscription";
+
 const centerAlign: Record<"th" | "td", tableCellAlign> = {
   th: "center",
   td: "center"
@@ -107,7 +109,7 @@ const columns: ColumnDef<UserData>[] = [
     meta: {
       textAlign: centerAlign
     },
-    cell: ({ row }) => row.original.subscriptionTier
+    cell: ({ row }) => <Subscription value={row.original.subscriptionTier} />
   },
   {
     header: "Status",
@@ -116,7 +118,7 @@ const columns: ColumnDef<UserData>[] = [
     meta: {
       textAlign: centerAlign
     },
-    cell: ({ row }) => <Status status={row.original.status} />
+    cell: ({ row }) => <Status value={row.original.status} />
   },
   {
     header: "Role",
