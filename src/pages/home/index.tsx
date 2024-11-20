@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { ColumnDef } from "@tanstack/react-table";
 
+import { tableCellAlign } from "@/declarations/tanstack";
 import { UserData } from "@/entities/user/types.ts";
 import Role from "@/pages/home/role.tsx";
 import Sex from "@/pages/home/sex.tsx";
@@ -20,11 +21,19 @@ import Table from "@/shared/components/table";
 import getJsonData from "@/shared/helpers/get-json-data.ts";
 import { DateManager } from "@/shared/managers";
 
+const centerAlign: Record<"th" | "td", tableCellAlign> = {
+  th: "center",
+  td: "center"
+};
+
 const columns: ColumnDef<UserData>[] = [
   {
     header: "№",
     accessorKey: "index",
     enableSorting: true,
+    meta: {
+      textAlign: centerAlign
+    },
     cell: ({ row }) => row.index + 1
   },
   {
@@ -37,6 +46,9 @@ const columns: ColumnDef<UserData>[] = [
     header: "Avatar",
     accessorKey: "avatar",
     enableSorting: false,
+    meta: {
+      textAlign: centerAlign
+    },
     cell: ({ row }) => (
       <Image
         src={row.original.avatar}
@@ -44,9 +56,10 @@ const columns: ColumnDef<UserData>[] = [
         rounded="full"
         borderRadius="full"
         fit="cover"
-        boxSize="35px"
+        boxSize="30px"
         title={row.original.name}
         alt="Avatar of user"
+        style={{ display: "inline-block" }}
       />
     )
   },
@@ -82,24 +95,36 @@ const columns: ColumnDef<UserData>[] = [
     header: "Sex",
     accessorKey: "sex",
     enableSorting: true,
+    meta: {
+      textAlign: centerAlign
+    },
     cell: ({ row }) => <Sex value={row.original.sex} />
   },
   {
     header: "Subscription",
     accessorKey: "subscriptionTier",
     enableSorting: true,
+    meta: {
+      textAlign: centerAlign
+    },
     cell: ({ row }) => row.original.subscriptionTier
   },
   {
     header: "Status",
     accessorKey: "status",
     enableSorting: true,
+    meta: {
+      textAlign: centerAlign
+    },
     cell: ({ row }) => <Status status={row.original.status} />
   },
   {
     header: "Role",
     accessorKey: "role",
     enableSorting: true,
+    meta: {
+      textAlign: centerAlign
+    },
     cell: ({ row }) => <Role value={row.original.role} />
   }
 ];
