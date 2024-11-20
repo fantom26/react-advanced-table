@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import {
   AbsoluteCenter,
   Container,
+  Link,
   Spinner,
   TableRootProps,
   Text,
@@ -34,7 +35,11 @@ const columns: ColumnDef<UserData>[] = [
     header: "Email",
     accessorKey: "email",
     enableSorting: true,
-    cell: ({ row }) => row.original.email
+    cell: ({ row }) => (
+      <Link variant="underline" href={`mailto:${row.original.email}`}>
+        {row.original.email}
+      </Link>
+    )
   },
   {
     header: "Birthday",
