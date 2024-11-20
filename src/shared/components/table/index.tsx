@@ -39,9 +39,13 @@ function DataTable<Data extends object>({
         {table.getHeaderGroups().map((headerGroup) => (
           <Table.Row key={headerGroup.id}>
             {headerGroup.headers.map((header) => {
+              const cellAlign =
+                header.column.columnDef?.meta?.textAlign?.th ?? "start";
+
               return (
                 <Table.ColumnHeader
                   key={header.id}
+                  textAlign={cellAlign}
                   onClick={header.column.getToggleSortingHandler()}
                 >
                   {flexRender(
@@ -58,8 +62,11 @@ function DataTable<Data extends object>({
         {table.getRowModel().rows.map((row) => (
           <Table.Row key={row.id}>
             {row.getVisibleCells().map((cell) => {
+              const cellAlign =
+                cell.column.columnDef?.meta?.textAlign?.td ?? "start";
+
               return (
-                <Table.Cell key={cell.id}>
+                <Table.Cell key={cell.id} textAlign={cellAlign}>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </Table.Cell>
               );
