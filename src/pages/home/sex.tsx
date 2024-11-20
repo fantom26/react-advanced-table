@@ -5,9 +5,17 @@ import { UserData } from "@/entities/user/types.ts";
 
 function Sex({ value }: { value: UserData["sex"] }) {
   return (
-    <Icon fontSize="20px">
-      {value === "female" ? <IoFemale /> : <IoMale />}
-    </Icon>
+    <>
+      {value === "female" ? (
+        <Icon fontSize="20px" color="pink">
+          <IoFemale />
+        </Icon>
+      ) : (
+        <Icon fontSize="20px" color="blue.400">
+          <IoMale />
+        </Icon>
+      )}
+    </>
   );
 }
 
