@@ -84,6 +84,12 @@ const columns: ColumnDef<UserData>[] = [
     cell: ({ row }) => <Sex value={row.original.sex} />
   },
   {
+    header: "Subscription",
+    accessorKey: "subscriptionTier",
+    enableSorting: true,
+    cell: ({ row }) => row.original.subscriptionTier
+  },
+  {
     header: "Status",
     accessorKey: "status",
     enableSorting: true,
