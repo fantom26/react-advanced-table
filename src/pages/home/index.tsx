@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import {
   AbsoluteCenter,
   Container,
+  Image,
   Link,
   Spinner,
   TableRootProps,
@@ -30,6 +31,23 @@ const columns: ColumnDef<UserData>[] = [
     accessorKey: "name",
     enableSorting: true,
     cell: ({ row }) => row.original.name
+  },
+  {
+    header: "Avatar",
+    accessorKey: "avatar",
+    enableSorting: false,
+    cell: ({ row }) => (
+      <Image
+        src={row.original.avatar}
+        loading="lazy"
+        rounded="full"
+        borderRadius="full"
+        fit="cover"
+        boxSize="35px"
+        title={row.original.name}
+        alt="Avatar of user"
+      />
+    )
   },
   {
     header: "Email",
