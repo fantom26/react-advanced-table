@@ -1,14 +1,25 @@
 import { useState } from "react";
 
-import { Table, TableRootProps } from "@chakra-ui/react";
+import { Icon, Table, TableRootProps } from "@chakra-ui/react";
 import {
   ColumnDef,
+  SortDirection,
   SortingState,
   flexRender,
   getCoreRowModel,
   getSortedRowModel,
   useReactTable
 } from "@tanstack/react-table";
+import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
+
+const sortIcon = {
+  asc: <TiArrowSortedUp />,
+  desc: <TiArrowSortedDown />
+};
+
+const SortingIndicator = ({ value }: { value: SortDirection | false }) => {
+  return value ? <Icon>{sortIcon[value]}</Icon> : null;
+};
 
 export type DataTableProps<Data extends object> = {
   data: Data[];
@@ -46,12 +57,16 @@ function DataTable<Data extends object>({
                 <Table.ColumnHeader
                   key={header.id}
                   textAlign={cellAlign}
+                  style={{
+                    cursor: header.column.getCanSort() ? "pointer" : "default"
+                  }}
                   onClick={header.column.getToggleSortingHandler()}
                 >
                   {flexRender(
                     header.column.columnDef.header,
                     header.getContext()
                   )}
+                  <SortingIndicator value={header.column.getIsSorted()} />
                 </Table.ColumnHeader>
               );
             })}
