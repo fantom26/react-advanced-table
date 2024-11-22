@@ -32,6 +32,7 @@ function DataTable<Data extends object>({
   data,
   columns
 }: DataTableProps<Data>) {
+  const [rowSelection, setRowSelection] = useState({});
   const [sorting, setSorting] = useState<SortingState>([]);
   const table = useReactTable({
     columns,
@@ -39,8 +40,11 @@ function DataTable<Data extends object>({
     getCoreRowModel: getCoreRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
+    enableRowSelection: true,
+    onRowSelectionChange: setRowSelection,
     state: {
-      sorting
+      sorting,
+      rowSelection
     }
   });
 

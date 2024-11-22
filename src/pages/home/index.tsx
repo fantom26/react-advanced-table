@@ -21,6 +21,7 @@ import Table from "@/shared/components/table";
 import getJsonData from "@/shared/helpers/get-json-data.ts";
 import { DateManager } from "@/shared/managers";
 
+import { Checkbox } from "../../components/ui/checkbox";
 import Subscription from "./subscription";
 
 const centerAlign: Record<"th" | "td", tableCellAlign> = {
@@ -29,6 +30,28 @@ const centerAlign: Record<"th" | "td", tableCellAlign> = {
 };
 
 const columns: ColumnDef<UserData>[] = [
+  {
+    id: "select",
+    header: ({ table }) => (
+      <Checkbox
+        name="select-row-all"
+        {...{
+          checked: table.getIsAllRowsSelected(),
+          onChange: table.getToggleAllRowsSelectedHandler()
+        }}
+      />
+    ),
+    cell: ({ row, cell }) => (
+      <Checkbox
+        name={`select-row-${cell.id}`}
+        {...{
+          checked: row.getIsSelected(),
+          disabled: !row.getCanSelect(),
+          onChange: row.getToggleSelectedHandler()
+        }}
+      />
+    )
+  },
   {
     header: "№",
     accessorKey: "index",
