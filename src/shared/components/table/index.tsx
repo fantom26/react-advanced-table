@@ -1,4 +1,4 @@
-import { CSSProperties, useState } from "react";
+import { useState } from "react";
 
 import {
   ColumnDef,
@@ -10,7 +10,7 @@ import {
   useReactTable
 } from "@tanstack/react-table";
 import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
-import { FixedSizeList as List } from "react-window";
+import { FixedSizeList as List, ListChildComponentProps } from "react-window";
 
 const sortIcon = {
   asc: <TiArrowSortedUp />,
@@ -48,7 +48,7 @@ function DataTable<Data extends object>({
 
   const { rows } = table.getRowModel();
 
-  const Row = ({ index, style }: { index: number; style: CSSProperties }) => {
+  const Row = ({ index, style }: ListChildComponentProps) => {
     const { id, getVisibleCells } = rows[index];
     return (
       <div
@@ -85,7 +85,7 @@ function DataTable<Data extends object>({
           className="grid bg-gray-100 sticky top-0 z-10 px-2 py-2"
           style={{
             gridTemplateColumns: `repeat(${columns.length}, minmax(0, 1fr))`,
-            paddingRight: "15px"
+            paddingRight: "16px"
           }}
         >
           {headers.map(({ column, id, getContext }) => {
