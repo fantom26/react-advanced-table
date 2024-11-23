@@ -21,6 +21,10 @@ const SortingIndicator = ({ value }: { value: SortDirection | false }) => {
   return value ? sortIcon[value] : null;
 };
 
+const rowClassNames = "grid gap-2 items-center py-2";
+const cellClassNames =
+  "border-gray-300 flex justify-center items-center text-sm text-gray-700";
+
 export type DataTableProps<Data extends object> = {
   data: Data[];
   columns: ColumnDef<Data>[];
@@ -48,15 +52,17 @@ function DataTable<Data extends object>({
 
   const { rows } = table.getRowModel();
 
-  const Row = ({ index, style }: ListChildComponentProps) => {
+  const Row = ({ index, isScrolling, style }: ListChildComponentProps) => {
     const { id, getVisibleCells } = rows[index];
+
+    const isRowStripped = index % 2 === 0 ? "bg-white" : "bg-gray-100";
+    const isRowLoading = isScrolling ? "animate-pulse" : "";
+
     return (
       <div
         role="row"
         key={id}
-        className={`grid items-center px-2 py-2 ${
-          index % 2 === 0 ? "bg-white" : "bg-gray-50"
-        }`}
+        className={`${rowClassNames} ${isRowStripped} ${isRowLoading}`}
         style={{
           ...style,
           gridTemplateColumns: `repeat(${columns.length}, minmax(0, 1fr))`
@@ -67,11 +73,15 @@ function DataTable<Data extends object>({
             cell.column.columnDef?.meta?.textAlign?.td ?? "left";
 
           return (
-            <div
-              className={`px-2 py-2 border-gray-300 flex justify-center items-center text-${cellAlign} text-sm text-gray-700`}
-            >
-              {flexRender(cell.column.columnDef.cell, cell.getContext())}
-            </div>
+            <>
+              {isScrolling ? (
+                <div className="px-3 py-3 bg-gray-300 rounded"></div>
+              ) : (
+                <div className={`${cellClassNames} text-${cellAlign} `}>
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </div>
+              )}
+            </>
           );
         })}
       </div>
@@ -79,12 +89,12 @@ function DataTable<Data extends object>({
   };
 
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto border border-gray-300">
       {table.getHeaderGroups().map(({ headers, id }) => (
         <div
           role="row"
           key={id}
-          className="grid bg-gray-100 sticky top-0 z-10 px-2 py-2"
+          className={`${rowClassNames} bg-gray-200 sticky top-0 z-10`}
           style={{
             gridTemplateColumns: `repeat(${columns.length}, minmax(0, 1fr))`,
             paddingRight: "16px"
@@ -96,7 +106,7 @@ function DataTable<Data extends object>({
             return (
               <div
                 key={id}
-                className={`px-2 py-2 border-gray-300 flex justify-center items-center text-${cellAlign} text-sm font-semibold text-gray-700`}
+                className={`${cellClassNames} text-${cellAlign}`}
                 style={{
                   cursor: column.getCanSort() ? "pointer" : "default"
                 }}
@@ -109,7 +119,14 @@ function DataTable<Data extends object>({
           })}
         </div>
       ))}
-      <List height={700} itemCount={rows.length} itemSize={60} width="100%">
+      <List
+        height={700}
+        itemCount={rows.length}
+        overscanCount={10}
+        useIsScrolling
+        itemSize={56}
+        width="100%"
+      >
         {Row}
       </List>
     </div>
