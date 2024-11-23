@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 
-import { AbsoluteCenter, Image, Spinner, Text, VStack } from "@chakra-ui/react";
 import { ColumnDef } from "@tanstack/react-table";
 
 import { tableCellAlign } from "@/declarations/tanstack";
@@ -64,16 +63,12 @@ const columns: ColumnDef<UserData>[] = [
       textAlign: centerAlign
     },
     cell: ({ row }) => (
-      <Image
+      <img
         src={row.original.avatar}
+        className="rounded-full object-cover w-9 h-9 inline-block"
         loading="lazy"
-        rounded="full"
-        borderRadius="full"
-        fit="cover"
-        boxSize="30px"
         title={row.original.name}
         alt="Avatar of user"
-        style={{ display: "inline-block" }}
       />
     )
   },
@@ -161,12 +156,9 @@ function Home() {
   return (
     <div className="container min-h-full m-">
       {loading ? (
-        <AbsoluteCenter>
-          <VStack colorPalette="teal">
-            <Spinner color="colorPalette.600" size="xl" />
-            <Text color="colorPalette.600">Loading...</Text>
-          </VStack>
-        </AbsoluteCenter>
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+        </div>
       ) : (
         <Table data={data} columns={columns} />
       )}

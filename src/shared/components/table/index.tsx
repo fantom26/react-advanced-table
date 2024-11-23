@@ -1,6 +1,5 @@
 import { useState } from "react";
 
-import { Icon } from "@chakra-ui/react";
 import {
   ColumnDef,
   SortDirection,
@@ -18,7 +17,7 @@ const sortIcon = {
 };
 
 const SortingIndicator = ({ value }: { value: SortDirection | false }) => {
-  return value ? <Icon>{sortIcon[value]}</Icon> : null;
+  return value ? sortIcon[value] : null;
 };
 
 export type DataTableProps<Data extends object> = {
