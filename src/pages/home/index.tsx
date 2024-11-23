@@ -1,13 +1,6 @@
 import { useEffect, useState } from "react";
 
-import {
-  AbsoluteCenter,
-  Container,
-  Image,
-  Spinner,
-  Text,
-  VStack
-} from "@chakra-ui/react";
+import { AbsoluteCenter, Image, Spinner, Text, VStack } from "@chakra-ui/react";
 import { ColumnDef } from "@tanstack/react-table";
 
 import { tableCellAlign } from "@/declarations/tanstack";
@@ -166,7 +159,7 @@ function Home() {
   }, []);
 
   return (
-    <Container minHeight="100vh">
+    <div className="container min-h-full m-">
       {loading ? (
         <AbsoluteCenter>
           <VStack colorPalette="teal">
@@ -177,7 +170,7 @@ function Home() {
       ) : (
         <Table data={data} columns={columns} />
       )}
-    </Container>
+    </div>
   );
 }
 
