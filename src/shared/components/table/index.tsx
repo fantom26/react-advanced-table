@@ -21,7 +21,7 @@ const SortingIndicator = ({ value }: { value: SortDirection | false }) => {
   return value ? sortIcon[value] : null;
 };
 
-const rowClassNames = "grid gap-2 items-center py-2";
+const rowClassNames = "grid gap-2 items-center py-2 px-2";
 const cellClassNames =
   "border-gray-300 flex justify-center items-center text-sm text-gray-700";
 
@@ -97,7 +97,7 @@ function DataTable<Data extends object>({
           className={`${rowClassNames} bg-gray-200 sticky top-0 z-10`}
           style={{
             gridTemplateColumns: `repeat(${columns.length}, minmax(0, 1fr))`,
-            paddingRight: "16px"
+            paddingRight: "calc(16px + 0.5rem)"
           }}
         >
           {headers.map(({ column, id, getContext }) => {
