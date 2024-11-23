@@ -1,6 +1,6 @@
 import "@tanstack/react-table";
 
-export type tableCellAlign = "start" | "center" | "end";
+export type tableCellAlign = "left" | "center" | "right";
 
 declare module "@tanstack/react-table" {
   interface ColumnMeta {

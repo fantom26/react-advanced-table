@@ -6,7 +6,6 @@ import {
   Image,
   Link,
   Spinner,
-  TableRootProps,
   Text,
   VStack
 } from "@chakra-ui/react";
@@ -154,13 +153,6 @@ const columns: ColumnDef<UserData>[] = [
   }
 ];
 
-const tableConfig: TableRootProps = {
-  size: "md",
-  striped: true,
-  showColumnBorder: true,
-  variant: "outline"
-};
-
 function Home() {
   const [data, setData] = useState<UserData[]>([]);
   const [loading, setLoading] = useState(true);
@@ -186,7 +178,7 @@ function Home() {
           </VStack>
         </AbsoluteCenter>
       ) : (
-        <Table data={data} columns={columns} tableConfig={tableConfig} />
+        <Table data={data} columns={columns} />
       )}
     </Container>
   );

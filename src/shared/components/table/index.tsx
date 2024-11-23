@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { Icon, Table, TableRootProps } from "@chakra-ui/react";
+import { Icon } from "@chakra-ui/react";
 import {
   ColumnDef,
   SortDirection,
@@ -24,11 +24,9 @@ const SortingIndicator = ({ value }: { value: SortDirection | false }) => {
 export type DataTableProps<Data extends object> = {
   data: Data[];
   columns: ColumnDef<Data>[];
-  tableConfig?: TableRootProps;
 };
 
 function DataTable<Data extends object>({
-  tableConfig,
   data,
   columns
 }: DataTableProps<Data>) {
@@ -49,51 +47,60 @@ function DataTable<Data extends object>({
   });
 
   return (
-    <Table.Root {...tableConfig}>
-      <Table.Header>
-        {table.getHeaderGroups().map((headerGroup) => (
-          <Table.Row key={headerGroup.id}>
-            {headerGroup.headers.map((header) => {
-              const cellAlign =
-                header.column.columnDef?.meta?.textAlign?.th ?? "start";
+    <div className="overflow-x-auto">
+      <table className="min-w-full table-auto border-collapse border border-gray-300">
+        <thead className="bg-gray-100 sticky top-0 z-10">
+          {table.getHeaderGroups().map((headerGroup) => (
+            <tr key={headerGroup.id}>
+              {headerGroup.headers.map((header) => {
+                const cellAlign =
+                  header.column.columnDef?.meta?.textAlign?.th ?? "left";
 
-              return (
-                <Table.ColumnHeader
-                  key={header.id}
-                  textAlign={cellAlign}
-                  style={{
-                    cursor: header.column.getCanSort() ? "pointer" : "default"
-                  }}
-                  onClick={header.column.getToggleSortingHandler()}
-                >
-                  {flexRender(
-                    header.column.columnDef.header,
-                    header.getContext()
-                  )}
-                  <SortingIndicator value={header.column.getIsSorted()} />
-                </Table.ColumnHeader>
-              );
-            })}
-          </Table.Row>
-        ))}
-      </Table.Header>
-      <Table.Body>
-        {table.getRowModel().rows.map((row) => (
-          <Table.Row key={row.id}>
-            {row.getVisibleCells().map((cell) => {
-              const cellAlign =
-                cell.column.columnDef?.meta?.textAlign?.td ?? "start";
+                return (
+                  <th
+                    key={header.id}
+                    className={`px-4 py-2 border-b border-gray-300 text-${cellAlign} text-sm font-semibold text-gray-700`}
+                    style={{
+                      cursor: header.column.getCanSort() ? "pointer" : "default"
+                    }}
+                    onClick={header.column.getToggleSortingHandler()}
+                  >
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext()
+                    )}
+                    <SortingIndicator value={header.column.getIsSorted()} />
+                  </th>
+                );
+              })}
+            </tr>
+          ))}
+        </thead>
+        <tbody>
+          {table.getRowModel().rows.map((row, index) => (
+            <tr
+              key={row.id}
+              className={`hover:bg-gray-50 ${
+                index % 2 === 0 ? "bg-white" : "bg-gray-50"
+              }`}
+            >
+              {row.getVisibleCells().map((cell) => {
+                const cellAlign =
+                  cell.column.columnDef?.meta?.textAlign?.td ?? "left";
 
-              return (
-                <Table.Cell key={cell.id} textAlign={cellAlign}>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </Table.Cell>
-              );
-            })}
-          </Table.Row>
-        ))}
-      </Table.Body>
-    </Table.Root>
+                return (
+                  <td
+                    className={`px-4 py-2 border-b border-gray-300 text-${cellAlign} text-sm text-gray-700`}
+                  >
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
+                );
+              })}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }
 
