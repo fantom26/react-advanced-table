@@ -44,7 +44,7 @@ const columns: ColumnDef<UserData>[] = [
   {
     header: "№",
     accessorKey: "index",
-    enableSorting: true,
+    enableSorting: false,
     meta: {
       textAlign: centerAlign
     },
@@ -145,7 +145,7 @@ function Home() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await getJsonData("db/users-300.json");
+      const response = await getJsonData("db/users.json");
 
       setData(response);
       setLoading(false);

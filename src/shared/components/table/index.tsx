@@ -52,6 +52,7 @@ function DataTable<Data extends object>({
     const { id, getVisibleCells } = rows[index];
     return (
       <div
+        role="row"
         key={id}
         className={`grid items-center px-2 py-2 ${
           index % 2 === 0 ? "bg-white" : "bg-gray-50"
@@ -81,6 +82,7 @@ function DataTable<Data extends object>({
     <div className="overflow-x-auto">
       {table.getHeaderGroups().map(({ headers, id }) => (
         <div
+          role="row"
           key={id}
           className="grid bg-gray-100 sticky top-0 z-10 px-2 py-2"
           style={{
