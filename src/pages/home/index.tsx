@@ -4,7 +4,6 @@ import {
   AbsoluteCenter,
   Container,
   Image,
-  Link,
   Spinner,
   Text,
   VStack
@@ -13,14 +12,9 @@ import { ColumnDef } from "@tanstack/react-table";
 
 import { tableCellAlign } from "@/declarations/tanstack";
 import { UserData } from "@/entities/user/types.ts";
-import Role from "@/pages/home/role.tsx";
-import Sex from "@/pages/home/sex.tsx";
-import Status from "@/pages/home/status.tsx";
 import Table from "@/shared/components/table";
 import getJsonData from "@/shared/helpers/get-json-data.ts";
 import { DateManager } from "@/shared/managers";
-
-import Subscription from "./subscription";
 
 const centerAlign: Record<"th" | "td", tableCellAlign> = {
   th: "center",
@@ -33,7 +27,7 @@ const columns: ColumnDef<UserData>[] = [
     header: ({ table }) => (
       <input
         type="checkbox"
-        className="checkbox checkbox-primary checkbox-sm"
+        className="checkbox checkbox-primary"
         name="select-row-all"
         {...{
           checked: table.getIsAllRowsSelected(),
@@ -44,7 +38,7 @@ const columns: ColumnDef<UserData>[] = [
     cell: ({ row, cell }) => (
       <input
         type="checkbox"
-        className="checkbox checkbox-primary checkbox-sm"
+        className="checkbox checkbox-primary"
         name={`select-row-${cell.id}`}
         {...{
           checked: row.getIsSelected(),
@@ -95,9 +89,9 @@ const columns: ColumnDef<UserData>[] = [
     accessorKey: "email",
     enableSorting: true,
     cell: ({ row }) => (
-      <Link variant="underline" href={`mailto:${row.original.email}`}>
+      <a className="underline" href={`mailto:${row.original.email}`}>
         {row.original.email}
-      </Link>
+      </a>
     )
   },
   {
@@ -125,7 +119,7 @@ const columns: ColumnDef<UserData>[] = [
     meta: {
       textAlign: centerAlign
     },
-    cell: ({ row }) => <Sex value={row.original.sex} />
+    cell: ({ row }) => row.original.sex
   },
   {
     header: "Subscription",
@@ -134,7 +128,7 @@ const columns: ColumnDef<UserData>[] = [
     meta: {
       textAlign: centerAlign
     },
-    cell: ({ row }) => <Subscription value={row.original.subscriptionTier} />
+    cell: ({ row }) => row.original.subscriptionTier
   },
   {
     header: "Status",
@@ -143,7 +137,7 @@ const columns: ColumnDef<UserData>[] = [
     meta: {
       textAlign: centerAlign
     },
-    cell: ({ row }) => <Status value={row.original.status} />
+    cell: ({ row }) => row.original.status
   },
   {
     header: "Role",
@@ -152,7 +146,7 @@ const columns: ColumnDef<UserData>[] = [
     meta: {
       textAlign: centerAlign
     },
-    cell: ({ row }) => <Role value={row.original.role} />
+    cell: ({ row }) => row.original.role
   }
 ];
 
