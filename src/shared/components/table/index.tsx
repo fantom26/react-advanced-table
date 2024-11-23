@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { CSSProperties, useState } from "react";
 
 import {
   ColumnDef,
@@ -10,6 +10,7 @@ import {
   useReactTable
 } from "@tanstack/react-table";
 import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
+import { FixedSizeList as List } from "react-window";
 
 const sortIcon = {
   asc: <TiArrowSortedUp />,
@@ -45,60 +46,70 @@ function DataTable<Data extends object>({
     }
   });
 
+  const { rows } = table.getRowModel();
+
+  const Row = ({ index, style }: { index: number; style: CSSProperties }) => {
+    const { id, getVisibleCells } = rows[index];
+    return (
+      <div
+        key={id}
+        className={`grid items-center px-2 py-2 ${
+          index % 2 === 0 ? "bg-white" : "bg-gray-50"
+        }`}
+        style={{
+          ...style,
+          gridTemplateColumns: `repeat(${columns.length}, minmax(0, 1fr))`
+        }}
+      >
+        {getVisibleCells().map((cell) => {
+          const cellAlign =
+            cell.column.columnDef?.meta?.textAlign?.td ?? "left";
+
+          return (
+            <div
+              className={`px-2 py-2 border-gray-300 flex justify-center items-center text-${cellAlign} text-sm text-gray-700`}
+            >
+              {flexRender(cell.column.columnDef.cell, cell.getContext())}
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
+
   return (
     <div className="overflow-x-auto">
-      <table className="min-w-full table-auto border-collapse border border-gray-300">
-        <thead className="bg-gray-100 sticky top-0 z-10">
-          {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id}>
-              {headerGroup.headers.map((header) => {
-                const cellAlign =
-                  header.column.columnDef?.meta?.textAlign?.th ?? "left";
+      {table.getHeaderGroups().map(({ headers, id }) => (
+        <div
+          key={id}
+          className="grid bg-gray-100 sticky top-0 z-10 px-2 py-2"
+          style={{
+            gridTemplateColumns: `repeat(${columns.length}, minmax(0, 1fr))`,
+            paddingRight: "15px"
+          }}
+        >
+          {headers.map(({ column, id, getContext }) => {
+            const cellAlign = column.columnDef?.meta?.textAlign?.th ?? "left";
 
-                return (
-                  <th
-                    key={header.id}
-                    className={`px-4 py-2 border-b border-gray-300 text-${cellAlign} text-sm font-semibold text-gray-700`}
-                    style={{
-                      cursor: header.column.getCanSort() ? "pointer" : "default"
-                    }}
-                    onClick={header.column.getToggleSortingHandler()}
-                  >
-                    {flexRender(
-                      header.column.columnDef.header,
-                      header.getContext()
-                    )}
-                    <SortingIndicator value={header.column.getIsSorted()} />
-                  </th>
-                );
-              })}
-            </tr>
-          ))}
-        </thead>
-        <tbody>
-          {table.getRowModel().rows.map((row, index) => (
-            <tr
-              key={row.id}
-              className={`hover:bg-gray-50 ${
-                index % 2 === 0 ? "bg-white" : "bg-gray-50"
-              }`}
-            >
-              {row.getVisibleCells().map((cell) => {
-                const cellAlign =
-                  cell.column.columnDef?.meta?.textAlign?.td ?? "left";
-
-                return (
-                  <td
-                    className={`px-4 py-2 border-b border-gray-300 text-${cellAlign} text-sm text-gray-700`}
-                  >
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </td>
-                );
-              })}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+            return (
+              <div
+                key={id}
+                className={`px-2 py-2 border-gray-300 flex justify-center items-center text-${cellAlign} text-sm font-semibold text-gray-700`}
+                style={{
+                  cursor: column.getCanSort() ? "pointer" : "default"
+                }}
+                onClick={column.getToggleSortingHandler()}
+              >
+                {flexRender(column.columnDef.header, getContext())}
+                <SortingIndicator value={column.getIsSorted()} />
+              </div>
+            );
+          })}
+        </div>
+      ))}
+      <List height={700} itemCount={rows.length} itemSize={60} width="100%">
+        {Row}
+      </List>
     </div>
   );
 }

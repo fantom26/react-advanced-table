@@ -16,6 +16,7 @@ const centerAlign: Record<"th" | "td", tableCellAlign> = {
 const columns: ColumnDef<UserData>[] = [
   {
     id: "select",
+    maxSize: 40,
     header: ({ table }) => (
       <input
         type="checkbox"
@@ -72,16 +73,16 @@ const columns: ColumnDef<UserData>[] = [
       />
     )
   },
-  {
-    header: "Email",
-    accessorKey: "email",
-    enableSorting: true,
-    cell: ({ row }) => (
-      <a className="underline" href={`mailto:${row.original.email}`}>
-        {row.original.email}
-      </a>
-    )
-  },
+  // {
+  //   header: "Email",
+  //   accessorKey: "email",
+  //   enableSorting: true,
+  //   cell: ({ row }) => (
+  //     <a className="underline" href={`mailto:${row.original.email}`}>
+  //       {row.original.email}
+  //     </a>
+  //   )
+  // },
   {
     header: "Birthday",
     accessorKey: "birthday",
