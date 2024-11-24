@@ -16,7 +16,7 @@ const centerAlign: Record<"th" | "td", tableCellAlign> = {
 const columns: ColumnDef<UserData>[] = [
   {
     id: "select",
-    maxSize: 40,
+    size: 40,
     header: ({ table }) => (
       <input
         type="checkbox"
@@ -45,6 +45,7 @@ const columns: ColumnDef<UserData>[] = [
     header: "№",
     accessorKey: "index",
     enableSorting: false,
+    size: 40,
     meta: {
       textAlign: centerAlign
     },
@@ -73,16 +74,17 @@ const columns: ColumnDef<UserData>[] = [
       />
     )
   },
-  // {
-  //   header: "Email",
-  //   accessorKey: "email",
-  //   enableSorting: true,
-  //   cell: ({ row }) => (
-  //     <a className="underline" href={`mailto:${row.original.email}`}>
-  //       {row.original.email}
-  //     </a>
-  //   )
-  // },
+  {
+    header: "Email",
+    accessorKey: "email",
+    enableSorting: true,
+    size: 240,
+    cell: ({ row }) => (
+      <a className="underline" href={`mailto:${row.original.email}`}>
+        {row.original.email}
+      </a>
+    )
+  },
   {
     header: "Birthday",
     accessorKey: "birthday",
@@ -137,7 +139,7 @@ const columns: ColumnDef<UserData>[] = [
   },
   {
     header: "Last updated by",
-    accessorKey: "meta.createdBy",
+    accessorKey: "meta.lastUpdatedBy",
     enableSorting: true,
     cell: ({ row }) => row.original.meta.lastUpdatedBy
   },
@@ -177,7 +179,7 @@ function Home() {
   }, []);
 
   return (
-    <div className="container min-h-full m-">
+    <div className="container min-h-full">
       {loading ? (
         <div className="flex items-center justify-center min-h-screen">
           <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>

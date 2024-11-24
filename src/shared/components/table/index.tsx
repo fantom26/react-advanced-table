@@ -17,10 +17,11 @@ const sortIcon = {
   desc: <TiArrowSortedDown />
 };
 
-const SortingIndicator = ({ value }: { value: SortDirection | false }) => {
-  return value ? sortIcon[value] : null;
-};
+const SortingIndicator = ({ value }: { value: SortDirection | false }) =>
+  value ? sortIcon[value] : null;
 
+const countColumnSize = <T,>(columns: ColumnDef<T>[]) =>
+  columns.map((c) => `${c.size ?? 100}px`).join(" ");
 const rowClassNames = "grid gap-2 items-center py-2 px-2";
 const cellClassNames =
   "border-gray-300 flex justify-center items-center text-sm text-gray-700";
@@ -57,6 +58,7 @@ function DataTable<Data extends object>({
 
     const isRowStripped = index % 2 === 0 ? "bg-white" : "bg-gray-100";
     const isRowLoading = isScrolling ? "animate-pulse" : "";
+    const columnSizes = countColumnSize(columns);
 
     return (
       <div
@@ -65,7 +67,7 @@ function DataTable<Data extends object>({
         className={`${rowClassNames} ${isRowStripped} ${isRowLoading}`}
         style={{
           ...style,
-          gridTemplateColumns: `repeat(${columns.length}, minmax(0, 1fr))`
+          gridTemplateColumns: `repeat(${columns.length}, ${columnSizes})`
         }}
       >
         {getVisibleCells().map((cell) => {
@@ -88,15 +90,17 @@ function DataTable<Data extends object>({
     );
   };
 
+  const columnSizes = countColumnSize(columns);
+
   return (
-    <div className="overflow-x-auto border border-gray-300">
+    <div className="border border-gray-300">
       {table.getHeaderGroups().map(({ headers, id }) => (
         <div
           role="row"
           key={id}
           className={`${rowClassNames} bg-gray-200 sticky top-0 z-10`}
           style={{
-            gridTemplateColumns: `repeat(${columns.length}, minmax(0, 1fr))`,
+            gridTemplateColumns: `repeat(${columns.length}, ${columnSizes})`,
             paddingRight: "calc(16px + 0.5rem)"
           }}
         >
