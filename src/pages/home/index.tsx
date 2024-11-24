@@ -111,6 +111,16 @@ const columns: ColumnDef<UserData>[] = [
     cell: ({ row }) => row.original.sex
   },
   {
+    header: "Phone number",
+    accessorKey: "contactInfo.phone",
+    enableSorting: true,
+    cell: ({ row }) => (
+      <a className="underline" href={`tel:${row.original.contactInfo.phone}`}>
+        {row.original.contactInfo.phone}
+      </a>
+    )
+  },
+  {
     header: "Subscription",
     accessorKey: "subscriptionTier",
     enableSorting: true,
@@ -118,6 +128,18 @@ const columns: ColumnDef<UserData>[] = [
       textAlign: centerAlign
     },
     cell: ({ row }) => row.original.subscriptionTier
+  },
+  {
+    header: "Created by",
+    accessorKey: "meta.createdBy",
+    enableSorting: true,
+    cell: ({ row }) => row.original.meta.createdBy
+  },
+  {
+    header: "Last updated by",
+    accessorKey: "meta.createdBy",
+    enableSorting: true,
+    cell: ({ row }) => row.original.meta.lastUpdatedBy
   },
   {
     header: "Status",
